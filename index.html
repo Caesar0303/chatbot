@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<style>
+    .admin_panel {
+        height: 100px;
+        display: flex;
+        margin-top: 10px;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+    }
+    .wrapper {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 20px;
+        width: 370px;
+        height: 570px;
+        background-color: #1A162A;
+        flex-direction: column;
+        justify-content: flex-end;
+    }
+    .chat_window_wrapper {
+        display: flex;
+        background-color: #1A162A;
+        margin-bottom: 15px;
+        justify-content: center;
+    }
+    #chat_window {
+        overflow-y:scroll;
+        background-color: #26252D;
+        width: 370px;
+        height: 570px;
+        display: flex;
+        flex-direction: column;
+    }
+    .chat_bot {
+        margin-right: 8px;
+        flex-direction: column;
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        align-content: flex-start;
+    }
+    .chat {
+        border-radius: 6px;
+        margin-bottom: 10px;
+    width: 350px;
+    border: 1px solid #1A162A;
+    }   
+    .client_message_wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+    }
+    .client_message {
+        margin-top: 18px;
+        margin-bottom: 18px;
+        margin-right: 1px;
+        border-radius: 30px 0px 33px 15px;
+        padding: 7px;
+        color: #fff;
+        background-color: #1E945B;
+        display: flex;
+        justify-content: flex-end;
+    }
+    .message{
+        margin-top: 18px;
+        color: #f0f0f3fb;
+        border-radius: 0px 33px 15px 30px;
+        background-color: #464451;
+        padding: 7px;
+    }
+    .btn {
+        border: 1px solid #000;
+        background-color: #98FB98;
+        border-radius: 6px;
+        text-align: center;
+        padding: 5px 8px 5px 8px;
+    }
+    .hidden {
+        display: none;
+    }
+
+    .admin_btn{
+        border: 1px solid #000;
+        color: #fff;
+        background-color: #A5260A;
+        border-radius: 6px;
+        padding: 5px 8px 5px 8px;
+        margin-top: 80px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+</style>
+
+<body>
+    <div class="wrapper">
+        <div class="chat_window_wrapper">
+            <div id="chat_window">
+            </div>
+        </div>
+       <div class="chat_bot">
+            <input type="text" class="chat">
+            <button class="btn" onclick="chatBot ()">Отправить</button>
+        </div>
+    </div>
+    <button class="admin_btn" onclick="showAdminPanel ()" id="1">Открыть админ панель</button>
+    <div class="admin_panel hidden">
+        <input type="text" class="add_client" placeholder="Введите фразы клиента">
+        <input type="text" class="add_bot" placeholder="Введите ответы бота">
+        <button onclick="addText()">Сохранить фразы в массиве</button>
+    </div>
+
+
+    <script>
+        let chat = document.getElementsByClassName('chat');
+        let chatWindow = document.getElementById('chat_window');
+
+        var client = ["Привет","Как дела?",'Пока'];
+        var bot = ["Здравствуйте!","Отлично, у вас как?",'До свидание!']
+
+        function showAdminPanel () {
+            let admin_pannel = document.getElementsByClassName('admin_panel')
+            let btn = document.getElementById('1')
+            if (admin_pannel[0].classList.contains('hidden')) {
+                admin_pannel[0].classList.remove('hidden')
+                btn.textContent = 'Закрыть админ панель';
+                console.log(btn)
+            }
+            else {
+                admin_pannel[0].classList.add('hidden')
+                btn.textContent = 'Открыть админ панель';
+            }
+        }
+
+        function addText () {
+            let addBot = document.getElementsByClassName('add_bot')
+            let addClient = document.getElementsByClassName('add_client')
+            let aBot = addBot[0].value
+            let bBot = addClient[0].value
+            client.push(bBot)
+            bot.push(aBot)
+            alert('Фразы успешно сохранены')
+        }
+
+        function chatBot () {
+            for (var i = 0; i < client.length; i++) {
+                // Создаем условие, если текст с инпута равна тексту с массива:
+                if (chat[0].value.toUpperCase() == client[i].toUpperCase()) {
+                    let message_wrapper = document.createElement('message_wrapper');
+                    let client_message_wrapper = document.createElement('client_message_wrapper');
+                    let client_message = document.createElement('client_message')
+                    let message = document.createElement('message');
+                    // Вставляем в переменные
+
+                    chatWindow.appendChild(client_message_wrapper);
+                    chatWindow.appendChild(message_wrapper);
+                    client_message_wrapper.appendChild(client_message);
+                    message_wrapper.appendChild(message);
+                    // В блок chatwindow цепляем нужные блоки
+                    client_message_wrapper.classList.add('client_message_wrapper')
+                    client_message.classList.add('client_message')
+                    message.classList.add('message')
+                    // Добавляем стили для созданных блоков
+
+                    client_message.innerHTML=chat[0].value;
+                    message.innerHTML=bot[i];
+                    // Добаляем текст в блоки
+                    return false;
+                    // Завершаем цикл
+                }
+            }
+
+            for (var y = 0; y < client.length; y++) {
+                if (chat[0].value.toUpperCase() != client[y].toUpperCase()) {
+                    let message_wrapper = document.createElement('message_wrapper');
+                    let client_message_wrapper = document.createElement('client_message_wrapper');
+                    let client_message = document.createElement('client_message')
+                    let message = document.createElement('message');
+
+                    chatWindow.appendChild(client_message_wrapper);
+                    chatWindow.appendChild(message_wrapper);
+
+                    client_message_wrapper.appendChild(client_message);
+                    message_wrapper.appendChild(message);
+
+                    client_message_wrapper.classList.add('client_message_wrapper')
+                    client_message.classList.add('client_message')
+                    message.classList.add('message')
+                    
+                    client_message.innerHTML=chat[y].value;
+                    message.innerHTML="Извините, но я вас не понял.";
+                    
+                    return false;
+                }
+            }
+        }
+    </script>
+</body>
+</html>
