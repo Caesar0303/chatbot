@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="main.css" rel="stylesheet" type="text/css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="chat_window_wrapper">
+            <div id="chat_window">
+            </div>
+        </div>
+       <div class="chat_bot">
+            <input type="text" class="chat">
+            <button class="btn" onclick="chatBot ()">Отправить</button>
+        </div>
+    </div>
+    <button class="admin_btn" onclick="showAdminPanel ()" id="1">Открыть админ панель</button>
+    <div class="admin_panel hidden">
+        <input type="text" class="add_client" placeholder="Введите фразы клиента">
+        <input type="text" class="add_bot" placeholder="Введите ответы бота">
+        <button onclick="addText()">Сохранить фразы в массиве</button>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
